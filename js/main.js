@@ -8,20 +8,20 @@ $(function () {
     for(var key in CityList){
         $("#SelectCity").append('<option value="' + CityList[key] + '">' + key + "</option>");
     }
-    $("#SelectCity option[value=Taoyuan]").attr("selected","true");
-    City="Taoyuan";
-    getBusData();
+    
     $("#SelectCity").on("change", function() {
         City = $(this).val();
+        $("input#RouteName").val("");
+        RouteName = "";
         $("#RouteData").empty();
-        getBusData();
+        getRouteData();
     });
     
     $("input#RouteName").keyup(function() {
         RouteName = $(this).val();
         $("#RouteData").empty();
         if(City != "")
-            getBusData();
+            getRouteData();
     });
     
     /*
@@ -34,30 +34,36 @@ $(function () {
             this.value = this.value.replace(/\s/g, "");
         }
     });*/
+    
+    
+    City="Taoyuan";
+    $("#SelectCity option[value=" + City + "]").attr("selected", "true");
+    getRouteData();
 });
 
-function getBusData() {
-    console.log(City + ' ' + RouteName);
-    if(RouteName == '') {
-        url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/" + City + "?$format=JSON";
-        $.getJSON(url, function(JSONData) {
-            Data = sortJSONData(JSONData, "RouteName", "Zh_tw");
-            $.each(Data, function(index, element) {
-                $("#RouteData").append('<a href="#" class="list-group-item link-color">' + element["RouteName"]["Zh_tw"] + '</a>');
-            });
-        });
+//url = "https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/" + City + "/" + RouteName + "?$filter=RouteName%2FZh_tw%20eq%20'" + RouteName + "'&$format=JSON";
 
+function getRouteData() {
+    console.log(City + ' ' + RouteName);
+    if(City == "InterCity") {
+        if(RouteName == ''){
+            url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/InterCity?$format=JSON";
+        }else{
+            url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/InterCity/" + RouteName + "?$format=JSON";
+        }
+    }
+    else if(RouteName == '') {
+        url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/" + City + "?$format=JSON";
     }
     else {
-        //url = "https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/" + City + "/" + RouteName + "?$filter=RouteName%2FZh_tw%20eq%20'" + RouteName + "'&$format=JSON";
         url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/" + City + "/" + RouteName + "?$format=JSON";
-        $.getJSON(url, function(JSONData) {
-            Data = sortJSONData(JSONData, "RouteName", "Zh_tw");
-            $.each(Data, function(index, element) {
-                $("#RouteData").append('<a href="#" class="list-group-item link-color">' + element["RouteName"]["Zh_tw"] + "<br>" + element["DepartureStopNameZh"] + "->" + element["DestinationStopNameZh"] + '</a>');
-            });
-        });
     }
+    $.getJSON(url, function(JSONData) {
+        Data = sortJSONData(JSONData, "RouteName", "Zh_tw");
+        $.each(Data, function(index, element) {
+            $("#RouteData").append('<a href="#" class="list-group-item link-color">' + element["RouteName"]["Zh_tw"] + "<br>" + element["DepartureStopNameZh"] + "->" + element["DestinationStopNameZh"] + '</a>');
+        });
+    });
 }
 
 function sortJSONData(JSONData, key, key2) {
