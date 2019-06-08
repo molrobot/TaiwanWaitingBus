@@ -73,7 +73,7 @@ function getRouteData() {
         Data = sortJSONData(JSONData, "RouteName", "Zh_tw");
         $.each(Data, function(index, element) {
             //部分縣市Headsign欄位可能為空，需要判斷
-            if(element["SubRoutes"][0]["Headsign"] == undefined) {
+            if(element["SubRoutes"][0]["Headsign"] == undefined || element["SubRoutes"][0]["Headsign"] == element["RouteName"]["Zh_tw"]) {
                 $("#RouteData").append('<a href="#" value="' + element["RouteName"]["Zh_tw"] + '" class="list-group-item link-color">' + element["RouteName"]["Zh_tw"] + "<br>" + element["DepartureStopNameZh"] + ' - ' + element["DestinationStopNameZh"] + '</a>');
             }else {
                 $("#RouteData").append('<a href="#" value="' + element["RouteName"]["Zh_tw"] + '" class="list-group-item link-color">' + element["RouteName"]["Zh_tw"] + "<br>" + element["SubRoutes"][0]["Headsign"] + '</a>');
