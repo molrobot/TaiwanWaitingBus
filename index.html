@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
+    <script src="js/bootstrap.js"></script>
     <script src="js/sha1.js"></script>
     <script src="js/city.js"></script>
     <script src="js/main.js"></script>
@@ -19,7 +20,7 @@
             <div class="col-md-4">
                 <select id="SelectCity" name="SelectCity"></select>
                 <div class="padding">
-                    <input type="text" id="RouteName" pattern="![^a-zA-Z0-9]" maxlength="15" style="text-align:center">
+                    <input type="text" id="RouteName" pattern="![^a-zA-Z0-9]" maxlength="15" style="text-align: center" size="10">
                 </div>
             </div>
         </div>
@@ -29,8 +30,5 @@
             </div>
         </div>
     </div>
-    <script>
-        $("#SelectCity option[value=Taoyuan]").attr("selected","true");
-    </script>
 </body>
 </html>

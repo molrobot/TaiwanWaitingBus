@@ -10,6 +10,7 @@ $(function () {
     }
     $("#SelectCity option[value=Taoyuan]").attr("selected","true");
     City="Taoyuan";
+    getBusData();
     $("#SelectCity").on("change", function() {
         City = $(this).val();
         $("#RouteData").empty();
