@@ -1,0 +1,17 @@
+body{
+    padding-top: 30px;
+	text-align: center;
+    font-family: "微軟正黑體";
+    background-color: #c1d0ff;
+    margin: 0 auto;
+    max-width: 1000px;
+    font-size: 150%;
+}
+
+.padding{
+    padding: 15px;
+}
+
+.link-color{
+    color: black;
+}

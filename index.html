@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script src="js/sha1.js"></script>
+    <script src="js/city.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body align="center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <select id="SelectCity" name="SelectCity"></select>
+                <div class="padding">
+                    <input type="text" id="RouteName" pattern="![^a-zA-Z0-9]" maxlength="15" style="text-align:center">
+                </div>
+            </div>
+        </div>
+        <div class="row  padding">
+            <div class="col-md-2"></div>
+            <div id="RouteData" class="list-group col-md-8 padding">
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#SelectCity option[value=Taoyuan]").attr("selected","true");
+    </script>
+</body>
+</html>
