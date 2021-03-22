@@ -1,0 +1,71 @@
+body {
+    padding-top: 30px;
+	text-align: center;
+    font-family: "微軟正黑體";
+    background-color: #f9f9f9;
+    margin: 0 auto;
+    max-width: 1000px;
+    font-size: 120%;
+}
+
+.padding {
+    padding: 15px;
+}
+
+.link-color {
+    color: black;
+}
+
+.stop {
+    float: left;
+}
+
+.time {
+    float: right;
+}
+
+.left {
+    left: 20%;
+}
+
+.right {
+    right: 20%;
+}
+
+.top {
+    background-color: #f1f1f1;
+    display: inline-block;
+    border-radius: 50%;
+    padding: 12px 10px;
+    position: fixed;
+    font-size: 80%;
+    color: black;
+    z-index: 99;
+    bottom: 5%;
+    right: 5%;
+}
+
+.swipe-button {
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    padding: 8px 16px;
+    position: fixed;
+    display: none;
+    color: black;
+    width: 50px;
+    height: 50px;
+    z-index: 99;
+    top: 45%;
+}
+
+a:hover {
+    background-color: #ddd;
+    text-decoration: none;
+    color: black;
+}
+
+@media only screen and (min-width:760px) {
+    .swipe-button {
+    display: inline-block;
+    }
+}
