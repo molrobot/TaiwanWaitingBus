@@ -1,4 +1,4 @@
-// 城市名稱、路線名稱、搜尋字串、路線ID
+// 城市名稱、搜尋字串、去返程
 let city, queryString, subRouteNum;
 
 // 站牌順序、路線方向資料、預估到站資料
@@ -7,7 +7,7 @@ let stopSequence = [], routeHeadsign = [], estimatedTime = [];
 // 網頁載入執行
 $(function () {
     // city = "Taoyuan";
-    // let routeName = "1";
+    // let routeName = "155";
 
     // 取得網址參數
     let myUrl = window.location.href;
@@ -19,23 +19,22 @@ $(function () {
     // example: ?$filter=RouterName/Zh_tw eq '5063'
     //          ?$filter=RouteName%2FZh_tw%20eq%20'5063'&$format=JSON"
     queryString = routeName + "?$filter=RouteName%2FZh_tw%20eq%20'" + routeName + "'&$format=JSON";
-    
+
     subRouteNum = 0;
 
-    $.when(getStopSequence(), getHeadsign()).done(function () {
+    $.when(getStopSequence(), getHeadsign()).then(function () {
         // console.log(stopSequence[0]);
         // console.log(routeHeadsign[0]);
         console.assert(routeHeadsign.length === stopSequence.length);
-    });
-
-    $.when(getBusData()).done(function () {
-        // console.log(estimatedTime[0]);
+        return getBusData();
+    }).then(function () {
+        console.assert(estimatedTime[0] !== undefined);
         printBusData();
     });
 
     // Hammer套件，監聽swipe事件
-    const el = document.documentElement;
-    const swipe = Hammer(el, {
+    let el = document.documentElement;
+    let swipe = Hammer(el, {
         touchAction: 'pan-y'
     });
 
