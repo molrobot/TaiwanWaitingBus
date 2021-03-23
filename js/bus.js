@@ -95,11 +95,13 @@ function getStopSequence() {
     $.when(getJSONData(url)).done(function (JSONData) {
         // console.log(JSONData);
         $.each(JSONData, function(index1, item1) {
-            let stopName = [];
+            let stopUID = [], stopName = [];
             $.each(item1["Stops"], function(index2, item2) {
+                stopUID.push(item2["StopUID"]);
                 stopName.push(item2["StopName"]["Zh_tw"]);
             });
-            stopSequence.push(stopName);
+            let stopData = [stopUID, stopName];
+            stopSequence.push(stopData);
         });
         // console.log(stopSequence);
         $d.resolve();
@@ -159,7 +161,7 @@ function getBusData() {
                     subRouteData.push(item);
                 }
             });
-            sortJSONData(subRouteData);
+            sortJSONData(subRouteData, i);
             estimatedTime.push(subRouteData);
         }
         // console.log(estimatedTime);
@@ -196,12 +198,22 @@ function printBusData() {
     });
 }
 
-//資料排序
-function sortJSONData(JSONData) {
+// 資料排序
+function sortJSONData(JSONData, i) {
+    let x, y;
     return JSONData.sort(function(a, b) {
-        let x, y;
-        x = a["StopSequence"];
-        y = b["StopSequence"];
+
+        x = stopSequence[i][0].indexOf(a["StopUID"]);
+        y = stopSequence[i][0].indexOf(b["StopUID"]);
+
+        // if (a["StopSequence"] !== undefined && b["StopSequence"] !== undefined) {
+        //     x = a["StopSequence"];
+        //     y = b["StopSequence"];
+        // } else {
+        //     x = stopSequence[i].indexOf(a["StopName"]["Zh_tw"]);
+        //     y = stopSequence[i].indexOf(b["StopName"]["Zh_tw"]);
+        // }
+
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }
