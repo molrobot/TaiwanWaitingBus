@@ -1,5 +1,5 @@
 //網頁載入執行
-$(document).ready(function () {
+$(function () {
     // 城市名稱、路線名稱
     let city, routeName;
 

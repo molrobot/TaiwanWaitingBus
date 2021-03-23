@@ -35,10 +35,12 @@ $(function () {
 
     // Hammer套件，監聽swipe事件
     const el = document.documentElement;
-    const swipe = Hammer(el);
+    const swipe = Hammer(el, {
+        touchAction: 'pan-y'
+    });
 
     swipe.get("swipe").set({
-        direction: Hammer.DIRECTION_ALL,
+        direction: Hammer.DIRECTION_HORIZONTAL,
         threshold: 1,
         velocity: 0.1
     });
