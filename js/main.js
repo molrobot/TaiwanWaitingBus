@@ -1,4 +1,3 @@
-//網頁載入執行
 $(function () {
     // 城市名稱、路線名稱
     let city, routeName;
@@ -44,12 +43,6 @@ function getRouteData(city) {
     }
 
     // 抓取JSON資料並印出
-    // 方式1
-    // Promise.all([getJSONData(searchUrl)]).then((JSONData) => {
-    //     console.log(JSONData);
-    // });
-
-    // 方式2
     $.when(getJSONData(url)).done(function (JSONData) {
         // console.log(JSONData);
         let routeListData = sortJSONData(JSONData), headsign;

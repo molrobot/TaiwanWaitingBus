@@ -4,17 +4,12 @@ let city, queryString, subRouteNum;
 // 站牌順序、路線方向資料、預估到站資料
 let stopSequence = [], routeHeadsign = [], estimatedTime = [];
 
-// 網頁載入執行
 $(function () {
-    // city = "Taoyuan";
-    // let routeName = "155";
-
     // 取得網址參數
     let myUrl = window.location.href;
     const url = new URL(myUrl);
     city = url.searchParams.get("city");
     let routeName = url.searchParams.get("route");
-
 
     // example: ?$filter=RouterName/Zh_tw eq '5063'
     //          ?$filter=RouteName%2FZh_tw%20eq%20'5063'&$format=JSON"
@@ -78,7 +73,6 @@ $(function () {
         }
     });
 });
-
 
 function getStopSequence() {
     let $d = $.Deferred();
@@ -202,18 +196,8 @@ function printBusData() {
 function sortJSONData(JSONData, i) {
     let x, y;
     return JSONData.sort(function(a, b) {
-
         x = stopSequence[i][0].indexOf(a["StopUID"]);
         y = stopSequence[i][0].indexOf(b["StopUID"]);
-
-        // if (a["StopSequence"] !== undefined && b["StopSequence"] !== undefined) {
-        //     x = a["StopSequence"];
-        //     y = b["StopSequence"];
-        // } else {
-        //     x = stopSequence[i].indexOf(a["StopName"]["Zh_tw"]);
-        //     y = stopSequence[i].indexOf(b["StopName"]["Zh_tw"]);
-        // }
-
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }
