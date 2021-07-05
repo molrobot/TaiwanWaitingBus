@@ -77,9 +77,7 @@ $(function () {
         let request = objectStore.get(city);
         request.onsuccess = function (event) {
             routeList = event.target.result;
-            let updateTime = new Date(routeList["time"]);
-            console.log((Date.now() - updateTime.getTime()));
-            if(routeList === undefined || (Date.now() - updateTime.getTime()) > 3600000){
+            if(routeList === undefined || (Date.now() - routeList['time']) > 3600000){
                 routeList = updateRouteList();
             } else {
                 routeList = routeList["data"];
