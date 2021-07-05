@@ -37,7 +37,7 @@ $(function () {
     $("input#RouteName").keyup(function() {
         routeName = $(this).val();
         if(city !== "")
-            searchRouteData(routeName);
+            searchRouteData();
     });
 
     // 首次執行，設定桃園市
@@ -77,20 +77,22 @@ $(function () {
         let request = objectStore.get(city);
         request.onsuccess = function (event) {
             routeList = event.target.result;
-            if(routeList === undefined){
-                routeList = saveRouteList();
+            let updateTime = new Date(routeList["time"]);
+            console.log((Date.now() - updateTime.getTime()));
+            if(routeList === undefined || (Date.now() - updateTime.getTime()) > 3600000){
+                routeList = updateRouteList();
             } else {
                 routeList = routeList["data"];
             }
             $d.resolve(routeList);
         };
         request.onerror = function (event) {
-            $d.reject(event.target.result + "路線資料取得失敗");
+            $d.reject(event.target.error + "路線資料取得失敗");
         }
         return $d;
     }
 
-    function saveRouteList() {
+    function updateRouteList() {
         let url;
         if(city === "InterCity") {
             url = "https://ptx.transportdata.tw/MOTC/v2/Bus/Route/InterCity?$format=JSON";
@@ -102,12 +104,12 @@ $(function () {
             // console.log(JSONData);
             let routeList = sortJSONData(JSONData);
             let objectStore = getObjectStore(DB_BUS_LIST, "readwrite");
-            let request = objectStore.add({city: city, data: routeList});
+            let request = objectStore.put({city: city, data: routeList, time: Date.now()});
             request.onsuccess = function (event) {
                 console.log(event.target.result + "路線資料更新成功");
             }
             request.onerror = function (event) {
-                console.log(event.target.result + "路線資料更新失敗");
+                console.log(event.target.error + "路線資料更新失敗");
             }
             return routeList;
         });
